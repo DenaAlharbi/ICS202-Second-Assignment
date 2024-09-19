@@ -1,33 +1,33 @@
 public class SLL<T> {
-    private SNode<T> head, tail;
+    private SNode<T> head;
+    private SNode<T> tail;
+    private final SNode<T> dummy;
+
     public SLL() {
-        head = tail = null;
+         dummy = new SNode<>(null);
+         head = tail= dummy; // even though the dummy will always serve as a head regardless of specifying that or not
     }
-    public boolean isEmpty() {
-        return head == null;
+
+    public boolean isEmpty() { // completed
+        return dummy.next == null;
     }
-    public void setToNull() {
-        head = tail = null;
+
+    public void addToHead(T el) { //completed
+        if (dummy.next != null) {
+            SNode<T> tmp = dummy.next;
+            dummy.next = new SNode<T>(el);
+            dummy.next.next = tmp;
+        } else
+            head.next = tail = new SNode<T>(el); //here dummy and head mean the same node
     }
-    public T firstEl() {
-        if (head != null)
-            return head.info;
-        else return null;
-    }
-    public void addToHead(T el) {
-        if (head != null) {
-            head = new SNode<T>(el,head,null);
-            head.next.prev = head;
-        }
-        else head = tail = new SNode<T>(el);
-    }
+
     public void addToTail(T el) {
         if (tail != null) {
-            tail = new SNode<T>(el,null,tail);
+            tail = new SNode<T>(el, null, tail);
             tail.prev.next = tail;
-        }
-        else head = tail = new SNode<T>(el);
+        } else head = tail = new SNode<T>(el);
     }
+
     public T deleteFromHead() {
         if (isEmpty())
             return null;
@@ -40,6 +40,7 @@ public class SLL<T> {
         }
         return el;
     }
+
     public T deleteFromTail() {
         if (isEmpty())
             return null;
@@ -52,89 +53,38 @@ public class SLL<T> {
         }
         return el;
     }
+    public T search(T element){ //Completed probably
+        if (isEmpty())
+            return null;
+        else{
+            SNode<T> tmp; // it is here and not in the for loop statement so that the if statement after it can access the variable
+            for (tmp = head.next; tmp != null && !tmp.info.equals(element);){
+                tmp = tmp.next;
+            }
+            if (tmp == null)
+                return null;
+            else return tmp.info;
+        }
+    }
+
     public void printAll() {
         for (SNode<T> tmp = head; tmp != null; tmp = tmp.next)
             System.out.print(tmp.info + " ");
         System.out.println();
     }
-    public T find(T el) {
-        SNode<T> tmp;
-        for (tmp = head; tmp != null && !tmp.info.equals(el); tmp = tmp.next);
-        if (tmp == null)
-            return null;
-        else return tmp.info;
-    }
-    public void printReverse(){
+
+
+
+    public void printReverse() {
         SNode<T> p = tail;
-        while (p!= null) {
-            System.out.print(p.info+" ");
-            p =p.prev;
-        }
-    }
-    public void delete7() {
-        SNode<T> h = head;
-        int count = 1;
-
-        while (h != null && count < 7) {
-            count++;
-            h = h.next;
-        }
-
-        if (count == 7 && h != null) {
-            if (h.prev != null) {
-                h.prev.next = h.next;
-            } else {
-                head = h.next;
-            }
-            if (h.next != null) {
-                h.next.prev = h.prev;
-            }
-        } else {
-            SNode<T> p = tail;
-
-            while (p.prev != null&& count!=7) {
-                //System.out.println(count);
-                p = p.prev;
-                count++;
-            }
-            //System.out.println("hh"+count);
-            p.prev.next = p.next;
-
-            p.next.prev = p.prev;
-
+        while (p != null) {
+            System.out.print(p.info + " ");
+            p = p.prev;
         }
     }
 
 
 
-    public void insertAlternate(SLL<T> newList) {
-        SNode<T> current1 = head;
-        SNode<T> current2 = newList.head;
 
-        while (current1 != null && current2 != null) {
-            SNode<T> next1 = current1.next;
-            SNode<T> next2 = current2.next;
-
-            current1.next = current2;
-            current2.prev = current1;
-
-            if (next1 != null) {
-                current2.next = next1;
-                next1.prev = current2;
-            }
-
-            current1 = next1;
-            current2 = next2;
-        }
-
-        if (current2 != null) {
-            if (current1 == null) {
-                head = newList.head;
-            } else {
-                current1.next = current2;
-                current2.prev = current1;
-            }
-        }
-    }
 
 }

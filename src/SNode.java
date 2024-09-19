@@ -1,13 +1,14 @@
 public class SNode <T>{
     public T info;
-    public SNode<T> next, prev;
+    public SNode<T> next;
     public SNode() {
-        next = null; prev = null;
+        next = null;
     }
     public SNode(T el) {
-        info = el; next = null; prev = null;
+        info = el; next = null;
     }
     public SNode(T el, SNode<T> n, SNode<T> p) {
-        info = el; next = n; prev = p;
+        info = el;
+        next = n;
     }
 }
