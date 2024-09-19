@@ -1,6 +1,6 @@
 public class SNode <T>{
     public T info;
-    public SNode<T> next;
+    public SNode<T> next; //
     public SNode() {
         next = null;
     }
