@@ -2,10 +2,10 @@ public class SLL<T> {
     private SNode<T> head;
     private SNode<T> tail;
     private final SNode<T> dummy;
-//
+
     public SLL() {
-         dummy = new SNode<>(null);
-         head = tail= dummy; // even though the dummy will always serve as a head regardless of specifying that or not
+        dummy = new SNode<>(null);
+        head =tail= dummy; // even though the dummy will always serve as a head regardless of specifying that or not
     }
 
     public boolean isEmpty() { // completed
@@ -18,7 +18,7 @@ public class SLL<T> {
             dummy.next = new SNode<T>(el);
             dummy.next.next = tmp;
         } else
-            head.next = tail = new SNode<T>(el); //here dummy and head mean the same node
+            head.next = new SNode<T>(el); //here dummy and head mean the same node
     }
 
     public void addToTail(T el) {
@@ -82,9 +82,4 @@ public class SLL<T> {
             p = p.prev;
         }
     }
-
-
-
-
-
 }
