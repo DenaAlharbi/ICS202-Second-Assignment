@@ -14,60 +14,76 @@ public class SLL<T> {
 
     public void addToHead(T el) { //completed
         if (dummy.next != null) {
-            SNode<T> tmp = dummy.next;
-            dummy.next = new SNode<T>(el);
-            dummy.next.next = tmp;
+            SNode<T> tmp = head;
+            dummy.next =head = new SNode<T>(el);
+            head.next = tmp;
+            /*
+            SNode<T> tmpForWhileLoop = dummy.next;
+            // This is unnecessary but doesnt affect the code (just to make sure)
+            while(tmpForWhileLoop.next!= null){
+                tmpForWhileLoop = tmpForWhileLoop.next;
+            }
+            tail = tmpForWhileLoop;
+            */
         } else
-            head.next = new SNode<T>(el); //here dummy and head mean the same node
+            dummy.next =head = tail =new SNode<T>(el); //here dummy and head mean the same node
     }
 
-    public void addToTail(T el) {
-        if (tail != null) {
-            tail = new SNode<T>(el, null, tail);
-            tail.prev.next = tail;
-        } else head = tail = new SNode<T>(el);
+    public void addToTail(T el) { // if there is only a dummy is that considered a tail so we just add to it
+        SNode<T> tmp = tail;
+        tmp.next = new SNode<>(el);
+        tail = tmp.next;
     }
 
-    public T deleteFromHead() {
+    public T deleteFromHead() { //completed
         if (isEmpty())
-            return null;
+            return (T) "The list does not have a head";
         T el = head.info;
         if (head == tail)   // if only one node on the list;
             head = tail = null;
         else {              // if more than one node in the list;
-            head = head.next;
-            head.prev = null;
+            dummy.next = head.next;
+            head = dummy.next;
         }
         return el;
     }
 
-    public T deleteFromTail() {
+    public T deleteFromTail() { // completed
         if (isEmpty())
-            return null;
+            return (T) "The list does not have a tail";
         T el = tail.info;
         if (head == tail)   // if only one node on the list;
             head = tail = null;
         else {              // if more than one node in the list;
-            tail = tail.prev;
-            tail.next = null;
+            SNode<T> tmpForWhileLoop = dummy;
+
+            while(tmpForWhileLoop.next.next!= null){
+                tmpForWhileLoop = tmpForWhileLoop.next;
+            }
+            tail = tmpForWhileLoop;
+            tmpForWhileLoop.next =null;
         }
         return el;
     }
-    public T search(T element){ //Completed probably
+    public String search(T element){ //Completed probably // what does this return
         if (isEmpty())
-            return null;
+            return  "The list does not have a tail";
         else{
             SNode<T> tmp; // it is here and not in the for loop statement so that the if statement after it can access the variable
-            for (tmp = head.next; tmp != null && !tmp.info.equals(element);){
+            for (tmp = dummy.next; tmp != null && !tmp.info.equals(element);){
                 tmp = tmp.next;
             }
             if (tmp == null)
-                return null;
-            else return tmp.info;
+                return "doesnt exist";
+            else return "Exists";
         }
     }
 
     public void printAll() {
+        for (SNode<T> tmp = dummy; tmp != null; tmp = tmp.next)
+            System.out.print(tmp.info + " ");
+        System.out.println();
+        //to print it without the dummy
         for (SNode<T> tmp = head; tmp != null; tmp = tmp.next)
             System.out.print(tmp.info + " ");
         System.out.println();
@@ -75,7 +91,7 @@ public class SLL<T> {
 
 
 
-    public void printReverse() {
+    public void printReverse() { // can i use a stack
         SNode<T> p = tail;
         while (p != null) {
             System.out.print(p.info + " ");
