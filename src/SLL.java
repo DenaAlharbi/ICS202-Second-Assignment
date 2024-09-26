@@ -1,7 +1,7 @@
 public class SLL<T> {
     private SNode<T> head;
     private SNode<T> tail;
-    private final SNode<T> dummy;
+    private SNode<T> dummy;
 
     public SLL() {
         dummy = new SNode<>(null);
@@ -91,11 +91,29 @@ public class SLL<T> {
 
 
 
-    public void printReverse() { // can i use a stack
-        SNode<T> p = tail;
-        while (p != null) {
-            System.out.print(p.info + " ");
-            p = p.prev;
+    public void Reverse() {
+        SNode<T> originalHead = dummy.next;
+        SNode<T> lastChanged = null;
+        SNode<T> link =head.next;
+
+
+
+        while (originalHead!= tail){
+            if (link.info.equals(originalHead.next.info)) {
+                assert lastChanged != null;
+                link=lastChanged.next;
+            }
+            dummy.next = tail;
+            lastChanged = dummy.next;
+            lastChanged.next = link;
+            SNode<T> tmp =dummy;
+            while(tmp.next!=tail){
+                tail = tmp;
+                tmp.next=null;
+            }
+
         }
+
+
     }
 }
