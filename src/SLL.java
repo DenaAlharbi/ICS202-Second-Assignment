@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class SLL<T> {
     private SNode<T> head;
     private SNode<T> tail;
@@ -5,7 +7,7 @@ public class SLL<T> {
 
     public SLL() {
         dummy = new SNode<>(null);
-        head =tail= dummy; // even though the dummy will always serve as a head regardless of specifying that or not
+        // dummy; // even though the dummy will always serve as a head regardless of specifying that or not
     }
 
     public boolean isEmpty() { // completed
@@ -17,22 +19,23 @@ public class SLL<T> {
             SNode<T> tmp = head;
             dummy.next =head = new SNode<T>(el);
             head.next = tmp;
-            /*
+
             SNode<T> tmpForWhileLoop = dummy.next;
             // This is unnecessary but doesnt affect the code (just to make sure)
             while(tmpForWhileLoop.next!= null){
                 tmpForWhileLoop = tmpForWhileLoop.next;
             }
             tail = tmpForWhileLoop;
-            */
+
         } else
             dummy.next =head = tail =new SNode<T>(el); //here dummy and head mean the same node
     }
 
     public void addToTail(T el) { // if there is only a dummy is that considered a tail so we just add to it
+        System.out.println("tail ="+ tail.info);
         SNode<T> tmp = tail;
-        tmp.next = new SNode<>(el);
-        tail = tmp.next;
+        tmp =tmp.next = new SNode<>(el);
+        tail = tmp;
     }
 
     public T deleteFromHead() { //completed
@@ -65,55 +68,51 @@ public class SLL<T> {
         }
         return el;
     }
-    public String search(T element){ //Completed probably // what does this return
+    public boolean search(T element){ //Completed probably // what does this return
         if (isEmpty())
-            return  "The list does not have a tail";
+            return false;
         else{
-            SNode<T> tmp; // it is here and not in the for loop statement so that the if statement after it can access the variable
-            for (tmp = dummy.next; tmp != null && !tmp.info.equals(element);){
+            SNode<T> tmp= dummy.next; // it is here and not in the for loop statement so that the if statement after it can access the variable
+            while (tmp != null && !tmp.info.equals(element)){
                 tmp = tmp.next;
             }
-            if (tmp == null)
-                return "doesnt exist";
-            else return "Exists";
+            return tmp!=null;
         }
     }
 
-    public void printAll() {
+    public void printAll() { //completed
         for (SNode<T> tmp = dummy; tmp != null; tmp = tmp.next)
             System.out.print(tmp.info + " ");
         System.out.println();
         //to print it without the dummy
-        for (SNode<T> tmp = head; tmp != null; tmp = tmp.next)
+        /*for (SNode<T> tmp = head; tmp != null; tmp = tmp.next)
             System.out.print(tmp.info + " ");
-        System.out.println();
+        System.out.println();*/
     }
 
 
 
-    public void Reverse() {
-        SNode<T> originalHead = dummy.next;
-        SNode<T> lastChanged = null;
-        SNode<T> link =head.next;
+    public void Reverse() { // completed
+        if(isEmpty())
+            return;
 
 
+        SNode<T> tmp =null;
+        SNode<T> originalhead = dummy.next;
 
-        while (originalHead!= tail){
-            if (link.info.equals(originalHead.next.info)) {
-                assert lastChanged != null;
-                link=lastChanged.next;
-            }
-            dummy.next = tail;
-            lastChanged = dummy.next;
-            lastChanged.next = link;
-            SNode<T> tmp =dummy;
-            while(tmp.next!=tail){
-                tail = tmp;
-                tmp.next=null;
-            }
 
-        }
+        SNode<T> lastChanged = dummy.next;
 
+
+        SNode<T> linktonextnode= null ;
+
+        while (lastChanged!=null){
+            linktonextnode = lastChanged.next;
+            lastChanged.next= tmp;
+            tmp = lastChanged;
+            lastChanged = linktonextnode;
+
+        }dummy.next = tmp; tail = originalhead;
 
     }
 }
