@@ -1,6 +1,52 @@
 import java.util.Objects;
 
 public class SLL<T> {
+    public static void main(String[] args) {
+        SLL<String> stringList = new SLL<>();
+        System.out.println("Empty list");
+        stringList.printAll();
+        System.out.println("Add to head");
+        stringList.addToHead("1");
+        stringList.printAll();
+        System.out.println("Add to head");
+        stringList.addToHead("0");
+        stringList.printAll();
+        System.out.println("Add to tail");
+        stringList.addToTail("2");
+        stringList.printAll();
+        System.out.println("Add to tail");
+        stringList.addToTail("3");
+        stringList.printAll();
+        System.out.println("Reverse");
+        stringList.Reverse();
+        stringList.printAll();
+        System.out.println("Reverse");
+        stringList.Reverse();
+        stringList.printAll();
+        System.out.println("Search");
+        System.out.println(stringList.search("7"));
+        System.out.println(stringList.search("0"));
+        System.out.println("Delete from head");
+        stringList.deleteFromHead();
+        stringList.printAll();
+        System.out.println("Delete from tail");
+        stringList.deleteFromTail();
+        stringList.printAll();
+    }
+    public class SNode <T>{
+        public T info;
+        public SNode<T> next; //
+        public SNode() {
+            next = null;
+        }
+        public SNode(T el) {
+            info = el; next = null;
+        }
+        public SNode(T el, SNode<T> n, SNode<T> p) {
+            info = el;
+            next = n;
+        }
+    }
     private SNode<T> head;
     private SNode<T> tail;
     private SNode<T> dummy;
@@ -15,7 +61,7 @@ public class SLL<T> {
     }
 
     public void addToHead(T el) { //completed
-        if (dummy.next != null) {
+        if (!isEmpty()) {
             SNode<T> tmp = head;
             dummy.next =head = new SNode<T>(el);
             head.next = tmp;
@@ -32,15 +78,18 @@ public class SLL<T> {
     }
 
     public void addToTail(T el) { // if there is only a dummy is that considered a tail so we just add to it
-        System.out.println("tail ="+ tail.info);
+        //System.out.println("tail ="+ tail.info);
+        if(isEmpty()){
+            dummy.next = head = tail = new SNode<>(el);
+        }else{
         SNode<T> tmp = tail;
         tmp =tmp.next = new SNode<>(el);
-        tail = tmp;
+        tail = tmp;}
     }
 
     public T deleteFromHead() { //completed
         if (isEmpty())
-            return (T) "The list does not have a head";
+            return null;
         T el = head.info;
         if (head == tail)   // if only one node on the list;
             head = tail = null;
@@ -53,7 +102,7 @@ public class SLL<T> {
 
     public T deleteFromTail() { // completed
         if (isEmpty())
-            return (T) "The list does not have a tail";
+            return null;
         T el = tail.info;
         if (head == tail)   // if only one node on the list;
             head = tail = null;
@@ -81,6 +130,7 @@ public class SLL<T> {
     }
 
     public void printAll() { //completed
+        // This will print null at the beginning because of the dummy - under this code is without the dummy
         for (SNode<T> tmp = dummy; tmp != null; tmp = tmp.next)
             System.out.print(tmp.info + " ");
         System.out.println();
