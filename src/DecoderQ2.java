@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.Scanner;
+
 
 public class DecoderQ2 {
     public static void main(String[] args) {
@@ -6,6 +8,7 @@ public class DecoderQ2 {
         Scanner k = new Scanner(System.in);
 
         System.out.print("Enter a text> ");
+
         String input = k.nextLine();
         boolean reverseNext = false;
         for (char charInArray : input.toCharArray()) {
@@ -27,3 +30,41 @@ public class DecoderQ2 {
 
     }
 }
+
+class LabStack<T> {
+    ArrayList<T> pool;
+
+    public LabStack() {
+        pool = new ArrayList<T>();
+    }
+
+
+    public void clear() {
+        pool.clear();
+    }
+
+    public boolean isEmpty() {
+        return pool.isEmpty();
+    }
+
+    public T topEl() {
+        if (isEmpty())
+            throw new java.util.EmptyStackException();
+        return pool.get(pool.size()-1);
+    }
+
+    public T pop() {
+        if (isEmpty())
+            throw new java.util.EmptyStackException();
+        return pool.remove(pool.size()-1);
+    }
+
+    public void push(T el) {
+        pool.add(el);
+    }
+
+    public String toString() {
+        return pool.toString();
+    }
+}
+
