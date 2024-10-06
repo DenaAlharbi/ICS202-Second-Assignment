@@ -1,3 +1,4 @@
+//Dena Alharbi 202250560
 public class SLLQ1<T> {
     //This is for testing
     public static void main(String[] args) {
